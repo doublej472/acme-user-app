@@ -1,0 +1,13 @@
+<h1>List of users</h1>
+<table class="user_list">
+  <tr>
+    <th>Username</th>
+    <th>user_id</th>
+  </tr>
+  {{#each users}}
+    <tr>
+      <td>{{this.username}}</td>
+      <td>{{this.user_id}}</td>
+    </tr>
+  {{/each}}
+</table>
