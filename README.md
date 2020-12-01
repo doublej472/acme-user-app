@@ -20,3 +20,11 @@ Here is an example of the command that can be used to run this app:
 npm install
 SQL_HOST='127.0.0.1' SQL_USER='acme' SQL_PASS='acme' SQL_DB='userdb' npm start
 ```
+
+## Docker
+This repository comes with a Dockerfile that will containerize this application.
+You can build it just like any other Docker container:
+
+```
+docker build -t acme/acme-user-app:latest .
+```
