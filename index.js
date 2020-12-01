@@ -7,15 +7,15 @@ const mysql = require('mysql');
 const app = express();
 const port = 8080;
 
-const sql_path = '127.0.0.1';
-const sql_user = 'acme'
-const sql_pass = 'acme'
-const sql_db = 'userdb'
+const sql_host = process.env.SQL_HOST || '127.0.0.1';
+const sql_user = process.env.SQL_USER || 'acme';
+const sql_pass = process.env.SQL_PASS || 'acme';
+const sql_db = process.env.SQL_DB || 'userdb';
 
-console.log(`Establishing SQL connection to ${sql_user}@${sql_path} db ${sql_db}`);
+console.log(`Establishing SQL connection to ${sql_user}@${sql_host} db ${sql_db}`);
 
 var sql_connection = mysql.createConnection({
-  host     : sql_path,
+  host     : sql_host,
   user     : sql_user,
   password : sql_pass,
   database : sql_db
