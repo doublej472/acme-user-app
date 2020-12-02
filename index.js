@@ -7,14 +7,37 @@ const mysql = require('mysql');
 const app = express();
 const port = process.env.PORT || 8080;
 
-const sql_tmp = process.env.DB_HOST || '127.0.0.1:3306';
-const sql_host = sql_tmp.split(':')[0];
-const sql_port = sql_tmp.split(':')[1];
 const sql_user = process.env.DB_USER || 'acme';
 const sql_pass = process.env.DB_PASS || 'acme';
 const sql_db = process.env.DB_NAME || 'userdb';
+const dbSocketPath = process.env.DB_SOCKET_PATH || '/cloudsql';
 
-console.log(`Establishing SQL connection to ${sql_user}@${sql_host}:${sql_port} db ${sql_db}`);
+if (process.env.DB_HOST) {
+  const sql_tmp = process.env.DB_HOST || '127.0.0.1:3306';
+  const sql_host = sql_tmp.split(':')[0];
+  const sql_port = sql_tmp.split(':')[1];
+
+  console.log(`Establishing SQL connection to ${sql_host}:${sql_port}`);
+  var sql_connection_config = {
+    host     : sql_host,
+    port     : sql_port,
+    user     : sql_user,
+    password : sql_pass,
+    database : sql_db
+  }
+} else if (process.env.CLOUD_SQL_CONNECTION_NAME) {
+  console.log(`Establishing SQL connection to ${dbSocketPath}/${process.env.CLOUD_SQL_CONNECTION_NAME}`);
+  var sql_connection_config = {
+    socketPath : `${dbSocketPath}/${process.env.CLOUD_SQL_CONNECTION_NAME}`,
+    user     : sql_user,
+    password : sql_pass,
+    database : sql_db
+  }
+} else {
+  console.error("Neither DB_HOST nor CLOUD_SQL_CONNECTION_NAME was defined, bailing out");
+  process.exit(-1);
+}
+
 
 var sql_connection = mysql.createConnection({
   host     : sql_host,
