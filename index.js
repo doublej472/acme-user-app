@@ -5,7 +5,7 @@ const handlebars = require("express-handlebars");
 const mysql = require('mysql');
 
 const app = express();
-const port = 8080;
+const port = process.env.PORT || 8080;
 
 const sql_host = process.env.SQL_HOST || '127.0.0.1';
 const sql_user = process.env.SQL_USER || 'acme';
