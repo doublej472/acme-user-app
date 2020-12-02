@@ -9,7 +9,7 @@ const port = process.env.PORT || 8080;
 
 const sql_user = process.env.DB_USER || 'acme';
 const sql_pass = process.env.DB_PASS || 'acme';
-const sql_db = process.env.DB_NAME || 'userdb';
+const sql_db = process.env.DB_NAME || 'testdb';
 const dbSocketPath = process.env.DB_SOCKET_PATH || '/cloudsql';
 
 if (process.env.DB_HOST) {
@@ -38,14 +38,7 @@ if (process.env.DB_HOST) {
   process.exit(-1);
 }
 
-
-var sql_connection = mysql.createConnection({
-  host     : sql_host,
-  port     : sql_port,
-  user     : sql_user,
-  password : sql_pass,
-  database : sql_db
-});
+var sql_connection = mysql.createConnection(sql_connection_config);
 
 sql_connection.connect(function(err) {
   if (err) {
