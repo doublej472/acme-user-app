@@ -1,7 +1,6 @@
 "use strict";
 
 const express = require('express');
-const handlebars = require("express-handlebars");
 const mysql = require('mysql');
 
 const app = express();
@@ -34,13 +33,6 @@ if (process.env.CLOUD_SQL_CONNECTION_NAME) {
     database : sql_db
   }
 }
-
-// Use handlebars for the view engine, for easy templating
-app.engine('handlebars', handlebars());
-app.set('view engine', 'handlebars');
-
-// Static files
-app.use(express.static('public'));
 
 // All other requests go through here
 app.get('/', (req, res) => {
